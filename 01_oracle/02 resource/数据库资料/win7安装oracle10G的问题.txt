@@ -1,0 +1,49 @@
+问题出现:
+	Starting Oracle Universal Installer...
+
+	Checking installer requirements...
+
+	Checking operating system version: must be 4.0, 5.0, 5.1 or 5.2.    Actual 6.1
+                                      Failed <<<<
+
+	Exiting Oracle Universal Installer, log for this session can be found at C:\User
+	s\shuning\AppData\Local\Temp\OraInstall2011-03-09_10-52-39AM\installActions2011-
+	03-09_10-52-39AM.log
+
+	Please press Enter to exit...
+
+出现原因:
+	版本与win7不兼容
+
+
+解决方案:
+
+	首先下载，10203_vista_w2k8_x86_production_db（注意要下对了，不然没有refhost.xml文件）
+
+	http://www.oracle.com/technology/software/products/database/oracle10g/htdocs/10203vista.html
+	
+	http://down.gougou.com/down?cid=F8D838384C715191DCE4A64427D571202269067F
+
+	然后解压，在目录中找到refhost.xml(有两个，我的一个是在stage\prereq\db目录下，一个是在stage\prereq\db_prereqs\db目录		下)进行添加修，添加如下代码：
+
+ 	<!--Microsoft Windows 7-->
+ 	   <OPERATING_SYSTEM>
+     		 <VERSION VALUE="6.1"/>
+    	</OPERATING_SYSTEM>
+
+	而后还要修改一个oraparam.ini文件,在install目录下
+
+	先在[Certified Versions]
+	#You can customise error message shown for failure, provide value for CERTIFIED_VERSION_FAILURE_MESSAGE
+	#Windows=5.0,5.1,5.2,6.0,6.1
+	
+	再添加下面代码：
+
+	#[Windows-6.1-required]   
+	#Minimum display colours for OUI to run   
+	MIN_DISPLAY_COLORS=256  
+	#Minimum CPU speed required for OUI   
+	#CPU=300  
+	#[Windows-6.1-optional] 
+
+	这样就可以了。
